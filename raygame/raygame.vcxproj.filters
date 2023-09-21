@@ -26,5 +26,11 @@
     <ClInclude Include="BaseGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DemoGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
