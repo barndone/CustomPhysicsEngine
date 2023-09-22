@@ -4,6 +4,7 @@
 
 class DemoGame : public BaseGame
 {
-public:
-
+protected:
+	void virtual OnInit() override;
+	void virtual OnTick() override;
 };

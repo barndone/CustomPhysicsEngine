@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PhysObject.h"
+#include <vector>
 class BaseGame
 {
 protected:
@@ -7,7 +9,7 @@ protected:
 	float AccumulatedFixedTime = 0.0f;
 
 	//	internal lifecycle events
-	void virtual OnInit() { }
+	void virtual OnInit() {}
 
 	void virtual OnTick() { }
 
@@ -15,12 +17,18 @@ protected:
 
 	void virtual OnExit() { }
 
+	std::vector<class PhysObject*> PhysicsObjects;
+
+	//	TODO: store a collection of PhysObjects
+	//	TODO: during tickfixed, tick every physObject in that collection
+
 public:
 	//	default to 30 fps
 	float TargetFixedStep = 1.0f / 30.0f;
 
 	// default constructor - set up good defaults
 	BaseGame();
+	~BaseGame();
 	//	initialize the game
 	void Init();
 	//	poll for input and process game logic
