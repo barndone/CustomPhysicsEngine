@@ -13,9 +13,12 @@
 #include "EnumUtils.h"
 
 using CollisionFunc = bool(*)(const glm::vec2&, const Shape&, const glm::vec2&, const Shape&);
+using DepenetrationFunc = glm::vec2(*)(const glm::vec2&, const Shape&, const glm::vec2&, const Shape&, float&);
 using CollisionMap = std::unordered_map<ShapeType, CollisionFunc>;
+using DepenetrationMap = std::unordered_map<ShapeType, DepenetrationFunc>;
 
 CollisionMap collisionCheckers;
+DepenetrationMap collisionDepenetrators;
 
 BaseGame::BaseGame() 
 {
@@ -44,6 +47,10 @@ void BaseGame::Init()
 	collisionCheckers[ShapeType::CIRCLE | ShapeType::CIRCLE]	= CheckCircleCircle;
 	collisionCheckers[ShapeType::AABB | ShapeType::AABB]		= CheckAABBAABB;
 	collisionCheckers[ShapeType::CIRCLE | ShapeType::AABB]		= CheckCircleAABB;
+
+	collisionDepenetrators[ShapeType::CIRCLE | ShapeType::CIRCLE]	= DepenetrateCircleCircle;
+	collisionDepenetrators[ShapeType::AABB | ShapeType::AABB]		= DepenetrateAABBAABB;
+	collisionDepenetrators[ShapeType::CIRCLE | ShapeType::AABB]		= DepenetrateCircleAABB;
 
 	SetTargetFPS(60);
 }
@@ -82,7 +89,10 @@ void BaseGame::TickFixed()
 															right->Position, right->Collider);
 			if (inCollision)
 			{
-				int yeet = 1;
+				float pen = 0.0f;
+				glm::vec2 normal = collisionDepenetrators[pairType](left->Position, left->Collider, right->Position, right->Collider, pen);
+				
+				ResolvePhysObjects(*left, *right, 1.0f, normal, pen);
 			}
 		}
 	}

@@ -2,7 +2,6 @@
 #include <cstdint>
 
 #include "glm/vec2.hpp"
-#include "glm/vec4.hpp"
 
 struct Circle
 {
@@ -13,6 +12,17 @@ struct AABB
 {
 	float Width;
 	float Height;
+
+	glm::vec2 GetMin(const glm::vec2& _center) const
+	{
+		return _center - glm::vec2(Width / 2.0f, Height / 2.0f);
+	}
+
+	glm::vec2 GetMax(const glm::vec2& _center) const
+	{
+		return _center + glm::vec2(Width / 2.0f, Height / 2.0f);
+	}
+
 };
 
 //	NOT THE SAME THING AS AN ENUM (not technically)
@@ -52,3 +62,10 @@ bool CheckAABBAABB(const glm::vec2& _posA, const AABB& _rectA, const glm::vec2& 
 bool CheckAABBAABB(const glm::vec2& _posA, const Shape& _shapeA, const glm::vec2& _posB, const Shape& _shapeB);
 bool CheckCircleAABB(const glm::vec2& _posA, const Circle& _circleA, const glm::vec2& _posB, const AABB& _rectB);
 bool CheckCircleAABB(const glm::vec2& _posA, const Shape& _shapeA, const glm::vec2& _posB, const Shape& _shapeB);
+
+glm::vec2 DepenetrateCircleCircle(const glm::vec2& _posA, const Circle& _circleA, const glm::vec2& _posB, const Circle& _circleB, float &_pen);
+glm::vec2 DepenetrateCircleCircle(const glm::vec2& _posA, const Shape& _shapeA, const glm::vec2& _posB, const Shape& _shapeB, float& _pen);
+glm::vec2 DepenetrateAABBAABB(const glm::vec2& _posA, const AABB& _rectA, const glm::vec2& _posB, const AABB& _rectB, float& _pen);
+glm::vec2 DepenetrateAABBAABB(const glm::vec2& _posA, const Shape& _shapeA, const glm::vec2& _posB, const Shape& _shapeB, float& _pen);
+glm::vec2 DepenetrateCircleAABB(const glm::vec2& _posA, const Circle& _circleA, const glm::vec2& _posB, const AABB& _rectB, float& _pen);
+glm::vec2 DepenetrateCircleAABB(const glm::vec2& _posA, const Shape& _shapeA, const glm::vec2& _posB, const Shape& _shapeB, float& _pen);

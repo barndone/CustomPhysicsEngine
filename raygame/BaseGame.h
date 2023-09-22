@@ -17,6 +17,8 @@ protected:
 
 	void virtual OnExit() { }
 
+	//	TODO: add list of static Objects
+	//	Only check collisions for physicsObjects against other objects, 
 	std::vector<class PhysObject*> PhysicsObjects;
 
 	//	TODO: store a collection of PhysObjects
