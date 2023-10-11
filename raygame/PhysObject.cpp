@@ -8,7 +8,7 @@ using namespace glm;
 void PhysObject::TickPhysics(float _fixedDelta)
 {
 
-	if (UseGravity) { AddAcceleration({ 0, 9 }); }
+	if (UseGravity) { AddAcceleration({ 0, 20 }); }
 	//	integrate forces into velocity
 	Velocity += Forces * _fixedDelta;
 	//	clear out forces vector
@@ -87,6 +87,7 @@ void ResolvePhysObjects(PhysObject& _left, PhysObject& _right, float _elasticity
 		_right.Position += mtv;
 		_right.AddImpulse(impulse);
 	}
+
 
 }
 

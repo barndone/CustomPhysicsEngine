@@ -102,7 +102,10 @@ void BaseGame::Draw() const
 {
 	BeginDrawing();
 	ClearBackground(RAYWHITE);
-	DrawText("BOTTOM TEXT", 190, 200, 20, LIGHTGRAY);
+	DrawText("CONTROLS:", 20, 10, 15, BLACK);
+	DrawText("Left click to spawn a non-static Circle", 25, 26, 10, BLACK);
+	DrawText("Right click to spawn a non-static AABB (Rect)", 25, 37, 10, BLACK);
+	DrawText("Hold shift while clicking to spawn a static object", 25, 48, 10, BLACK);
 
 	for (auto PhysObj : PhysicsObjects)
 	{

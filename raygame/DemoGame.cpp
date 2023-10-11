@@ -11,16 +11,28 @@ void DemoGame::OnInit()
 	//PhysicsObjects.back()->Collider.Type = ShapeType::AABB;
 	//PhysicsObjects.back()->Collider.AABBData = AABB{ 10,10 };
 	PhysicsObjects.back()->Collider.Type = ShapeType::CIRCLE;
-	PhysicsObjects.back()->Collider.CircleData = Circle{ 20 };
+	PhysicsObjects.back()->Collider.CircleData = Circle{ 15 };
 
 	PhysicsObjects.emplace_back(new PhysObject());
 	PhysicsObjects.back()->Position = { 200, 200 };
 	PhysicsObjects.back()->UseGravity = false;
 	PhysicsObjects.back()->IsStatic = true;
-	//PhysicsObjects.back()->Collider.Type = ShapeType::AABB;
-	//PhysicsObjects.back()->Collider.AABBData = AABB{ 20,20 };
 	PhysicsObjects.back()->Collider.Type = ShapeType::CIRCLE;
-	PhysicsObjects.back()->Collider.CircleData = Circle{10};
+	PhysicsObjects.back()->Collider.CircleData = Circle{ 20 };
+
+	PhysicsObjects.emplace_back(new PhysObject());
+	PhysicsObjects.back()->Position = { 250, 200 };
+	PhysicsObjects.back()->UseGravity = false;
+	PhysicsObjects.back()->IsStatic = true;
+	PhysicsObjects.back()->Collider.Type = ShapeType::CIRCLE;
+	PhysicsObjects.back()->Collider.CircleData = Circle{ 20 };
+
+	PhysicsObjects.emplace_back(new PhysObject());
+	PhysicsObjects.back()->Position = { 350, 200 };
+	PhysicsObjects.back()->UseGravity = false;
+	PhysicsObjects.back()->IsStatic = true;
+	PhysicsObjects.back()->Collider.Type = ShapeType::CIRCLE;
+	PhysicsObjects.back()->Collider.CircleData = Circle{ 20 };
 
 }
 
@@ -54,5 +66,51 @@ void DemoGame::OnTick()
 	{
 		// +
 		player->AddImpulse({ 100, 0 });
+	}
+
+	//	spawn non-static circle
+	if (IsMouseButtonPressed(0) && !(IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)))
+	{
+		SpawnPhysObject(true, false);
+	}
+	//	spawn static circle
+	if (IsMouseButtonPressed(0) && (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)))
+	{
+		SpawnPhysObject(true, true);
+	}
+
+
+	//	spawn non-static circle
+	if (IsMouseButtonPressed(1) && !(IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)))
+	{
+		SpawnPhysObject(false, false);
+	}
+	//	spawn static circle
+	if (IsMouseButtonPressed(1) && (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)))
+	{
+		SpawnPhysObject(false, true);
+	}
+}
+
+void DemoGame::SpawnPhysObject(bool circle, bool isStatic)
+{
+	if (circle)
+	{
+		PhysicsObjects.emplace_back(new PhysObject());
+		PhysicsObjects.back()->Position = { GetMousePosition().x, GetMousePosition().y };
+		PhysicsObjects.back()->UseGravity = !isStatic;
+		PhysicsObjects.back()->IsStatic = isStatic;
+		PhysicsObjects.back()->Collider.Type = ShapeType::CIRCLE;
+		PhysicsObjects.back()->Collider.CircleData = Circle{ 10 };
+	}
+
+	else
+	{
+		PhysicsObjects.emplace_back(new PhysObject());
+		PhysicsObjects.back()->Position = { GetMousePosition().x, GetMousePosition().y };
+		PhysicsObjects.back()->UseGravity = !isStatic;
+		PhysicsObjects.back()->IsStatic = isStatic;
+		PhysicsObjects.back()->Collider.Type = ShapeType::AABB;
+		PhysicsObjects.back()->Collider.AABBData = AABB{ 10,10 };
 	}
 }
